@@ -1,0 +1,28 @@
+# Crontab Configuration for Flight Controller Autostart
+# 
+# Installation Instructions:
+# 1. Make the start script executable:
+#    chmod +x /path/to/start_controller.sh
+#
+# 2. Open crontab editor:
+#    crontab -e
+#
+# 3. Add one of the following lines (adjust paths):
+
+# Option 1: Start on system boot
+@reboot /home/user/lab5/Co-Processor/start_controller.sh >> /home/user/lab5/logs/cron.log 2>&1
+
+# Option 2: Start every minute (for testing)
+# * * * * * /home/user/lab5/Co-Processor/start_controller.sh >> /home/user/lab5/logs/cron.log 2>&1
+
+# Option 3: Start at specific time daily (e.g., 8:00 AM)
+# 0 8 * * * /home/user/lab5/Co-Processor/start_controller.sh >> /home/user/lab5/logs/cron.log 2>&1
+
+# Option 4: Check and restart if not running (every 5 minutes)
+# */5 * * * * pgrep -f flight_controller.py || /home/user/lab5/Co-Processor/start_controller.sh >> /home/user/lab5/logs/cron.log 2>&1
+
+# Notes:
+# - Replace /home/user with your actual home directory path
+# - The >> redirects stdout to log file
+# - The 2>&1 redirects stderr to same location as stdout
+# - Ensure virtual environment path is correct in start_controller.sh

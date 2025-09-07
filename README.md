@@ -7,3 +7,4 @@ lab_5\Scripts\activate
 
 pip install -r requirements.txt
 
+python simple_telemetry_plotter.py

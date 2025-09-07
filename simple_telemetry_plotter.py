@@ -6,19 +6,15 @@ import matplotlib.animation as animation
 from collections import deque
 
 
-
-
-master = mavutil.mavlink_connection('COM3', baud=115200)
+master = mavutil.mavlink_connection('COM3', baud=9600)
 master.wait_heartbeat()
 print("Heartbeat received")
-
 
 max_len = 200
 roll_data = deque(maxlen=max_len)
 pitch_data = deque(maxlen=max_len)
 yaw_data = deque(maxlen=max_len)
 time_data = deque(maxlen=max_len)
-
 
 start_time = time.time()
 
@@ -43,7 +39,6 @@ line_roll, = ax.plot([], [], label='Roll')
 line_pitch, = ax.plot([], [], label='Pitch')
 line_yaw, = ax.plot([], [], label='Yaw')
 
-
 ax.set_ylim(-3.5, 3.5)
 ax.set_xlim(0, max_len)
 ax.set_xlabel('Time (s)')
@@ -62,6 +57,6 @@ def update(frame):
     return line_roll, line_pitch, line_yaw
 
 
-ani = animation.FuncAnimation(fig, update, interval=100)
+ani = animation.FuncAnimation(fig, update, interval=100, cache_frame_data=False)
 plt.tight_layout()
 plt.show()

@@ -314,6 +314,7 @@ def main():
         while True:
             cmd = input("\n> ").strip().lower()
             if cmd == 'quit':
+                
                 break
             action = commands.get(cmd)
             if action:

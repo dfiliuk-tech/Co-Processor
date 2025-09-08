@@ -26,9 +26,3 @@ source "$VENV_PATH/bin/activate"
 export PYTHONUNBUFFERED=1
 
 "$VENV_PATH/bin/python" "$PYTHON_SCRIPT" >> "$LOG_FILE" 2>&1 &
-
-PID=$!
-echo "Started with PID: $PID" >> "$LOG_FILE"
-echo $PID > "$SCRIPT_DIR/flight_controller.pid"
-
-exit 0

@@ -65,6 +65,7 @@ class UAVController:
             self.connection.wait_heartbeat()
             print(f"Connected: System {self.connection.target_system}, Component {self.connection.target_component}")
             self._request_streams()
+            time.sleep(1)
             return True
         except Exception as e:
             print(f"Connection failed: {e}")
@@ -86,6 +87,7 @@ class UAVController:
                 self.connection.target_component,
                 stream_id, rate, 1
             )
+        print("Telemetry streams activated")
 
     def arm(self) -> None:
         if not self.connection:
@@ -95,7 +97,8 @@ class UAVController:
             self.connection.target_system,
             self.connection.target_component,
             mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
-            0, 1, 2989, 0, 0, 0, 0, 0
+            0,
+            1, 2989, 0, 0, 0, 0, 0
         )
         ack = self.connection.recv_match(type='COMMAND_ACK', blocking=True, timeout=30)
         if ack and ack.result == 0:
@@ -111,7 +114,8 @@ class UAVController:
             self.connection.target_system,
             self.connection.target_component,
             mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
-            0, 0, 0, 0, 0, 0, 0, 0
+            0,
+            0, 2989, 0, 0, 0, 0, 0
         )
         ack = self.connection.recv_match(type='COMMAND_ACK', blocking=True, timeout=3)
         if ack and ack.result == 0:
